@@ -44,7 +44,6 @@ class EvaluateExpression extends HTMLElement {
     detail[this.id] = message.data
     const new_event = new CustomEvent('UPDATED', {detail})
     this.dispatchEvent(new_event)
-    console.log(message.data, this.getAttribute('value'))
 
   }
 
