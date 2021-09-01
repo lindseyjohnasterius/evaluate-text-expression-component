@@ -1,16 +1,6 @@
 
 /*
-
-This is an implementation of the HTML Custom Element API: https://developer.mozilla.org/en-US/docs/Web/API/Window/customElements
-
-" Living code explains itself, somewhat, but the real value is in having a haunted town full of horror stories."
-  --𝙙𝙙𝙖𝙮
-
-Only other programmers believe that below this comment lies several John Grisham novels worth of code.
-
-A demo:
-
-https://codepen.io/lindseymysse/pen/ExWZEEr
+  DO NOT USE. 
 
 */
 
@@ -34,7 +24,7 @@ class EvaluateExpression extends HTMLElement {
     this.expression = this.innerText
     setInterval(()=>{this.checkForChanges()},
       Math.floor(Math.random() * 1000))
-    this.worker = new Worker('evaluate-expression-web-workers.js')
+    this.worker = new Worker('https://lindseymysse.github.io/evaluate-text-expression-component/evaluate-expression-web-workers.js)
     this.worker.onmessage = (e) => this.handleEval(e)
   }
 
