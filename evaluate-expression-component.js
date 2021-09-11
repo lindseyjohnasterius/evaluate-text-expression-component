@@ -24,18 +24,32 @@ class EvaluateExpression extends HTMLElement {
     this.expression = this.innerText
     setInterval(()=>{this.checkForChanges()},
       Math.floor(Math.random() * 1000))
-    this.worker = new Worker(
-    `
-       onmessage = function(e){
+
+
+    let newWorker = function (funcObj) {
+        // Build a worker from an anonymous function body
+        var blobURL = URL.createObjectURL(new Blob(
+            ['(', funcObj.toString(), ')()'],
+            {type: 'application/javascript'}
+         ))
+        var worker = new Worker(blobURL);
+        URL.revokeObjectURL(blobURL);
+        return worker;
+    }
+
+    this.worker = newWorker(function(){
+      //
+      onmessage = function(e){
         try{
           let result = eval(e.data)
           postMessage(result)
         } catch(e) {
           postMessage('error:', e)
         }
-      }   
-    `
-    )
+      }
+      //
+    })
+
     this.worker.onmessage = (e) => this.handleEval(e)
   }
 
