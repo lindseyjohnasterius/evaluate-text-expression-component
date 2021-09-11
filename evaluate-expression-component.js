@@ -24,7 +24,18 @@ class EvaluateExpression extends HTMLElement {
     this.expression = this.innerText
     setInterval(()=>{this.checkForChanges()},
       Math.floor(Math.random() * 1000))
-    this.worker = new Worker('https://lindseymysse.github.io/evaluate-text-expression-component/evaluate-expression-web-workers.js')
+    this.worker = new Worker(
+    `
+       onmessage = function(e){
+        try{
+          let result = eval(e.data)
+          postMessage(result)
+        } catch(e) {
+          postMessage('error:', e)
+        }
+      }   
+    `
+    )
     this.worker.onmessage = (e) => this.handleEval(e)
   }
 
